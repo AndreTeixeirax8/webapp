@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put,ParseIntPipe } from "@nestjs/common";
 import { CreateUserDTO } from "./dto/create-user.dto";
 import { UpdatePatchUserDTO } from "./dto/update-patch-user.dto";
 import { UpdatePutUserDTO } from "./dto/update-put-user.dto";
@@ -17,8 +17,8 @@ export class UserController{
     }
 
     @Get(':id')
-    async show(@Param()params){
-        return{users:{},params}
+    async show(@Param('id',ParseIntPipe)id:number){
+        return{users:{},id}
     }
 
     /**O PUT faz a alteração total dos dados ou seja se tem nome e endereço e você passar 
@@ -27,22 +27,22 @@ export class UserController{
     @Put(':id')
     /**Os decorators aplicado podem ser varios , aqui estamos pegando o corpo da requisição
     e os paramtros nele  */
-    async update(@Body() body:UpdatePutUserDTO,@Param()params){
-        return {body,params,method:'put'}
+    async update(@Body() body:UpdatePutUserDTO,@Param('id',ParseIntPipe)id:number){
+        return {body,id,method:'put'}
     }
 
       /**O PATCH faz a alteração dos dados porem os que não forem passados ele preserva no banco 
        * não são alterados , vai se alterar apenas os dados informados.
      */
     @Patch(':id')
-    async updatePartial(@Body() body:UpdatePatchUserDTO,@Param()params){
-        return {body,params,method:'patch'}
+    async updatePartial(@Body() body:UpdatePatchUserDTO,@Param('id',ParseIntPipe)id:number){
+        return {body,id,method:'patch'}
     }
 
     @Delete(':id')
-    async delete(@Param()params){
+    async delete(@Param('id',ParseIntPipe)id:number){
         return{
-            params
+            id
         }
     }
 
