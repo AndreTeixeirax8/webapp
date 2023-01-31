@@ -1,10 +1,13 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from "@nestjs/common";
+import { CreateUserDTO } from "./dto/create-user.dto";
+import { UpdatePatchUserDTO } from "./dto/update-patch-user.dto";
+import { UpdatePutUserDTO } from "./dto/update-put-user.dto";
 
 @Controller('users')
 export class UserController{
 
     @Post()
-    async create(@Body() body){
+    async create(@Body() body:CreateUserDTO){
         return {body}; 
     }
 
@@ -24,7 +27,7 @@ export class UserController{
     @Put(':id')
     /**Os decorators aplicado podem ser varios , aqui estamos pegando o corpo da requisição
     e os paramtros nele  */
-    async update(@Body() body,@Param()params){
+    async update(@Body() body:UpdatePutUserDTO,@Param()params){
         return {body,params,method:'put'}
     }
 
@@ -32,7 +35,7 @@ export class UserController{
        * não são alterados , vai se alterar apenas os dados informados.
      */
     @Patch(':id')
-    async updatePartial(@Body() body,@Param()params){
+    async updatePartial(@Body() body:UpdatePatchUserDTO,@Param()params){
         return {body,params,method:'patch'}
     }
 
