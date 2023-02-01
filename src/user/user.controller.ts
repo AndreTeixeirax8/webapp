@@ -18,12 +18,13 @@ export class UserController{
 
     @Get()
     async list(){
-        return{users:[]}
+        return this.userService.list();
     }
 
     @Get(':id')
-    async show(@Param('id',ParseIntPipe)id:number){
-        return{users:{},id}
+    async show(@Param('id',ParseIntPipe) id:number){
+
+        return this.userService.show(id);
     }
 
     /**O PUT faz a alteração total dos dados ou seja se tem nome e endereço e você passar 
