@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Put,ParseIntPipe, UseInterceptors } from "@nestjs/common";
+import { ParamId } from "src/decorators/param-id.decorator";
 import { LogInterceptor } from "src/interceptors/log.interceptor";
 import { CreateUserDTO } from "./dto/create-user.dto";
 import { UpdatePatchUserDTO } from "./dto/update-patch-user.dto";
@@ -24,7 +25,7 @@ export class UserController{
     }
 
     @Get(':id')
-    async show(@Param('id',ParseIntPipe) id:number){
+    async show(@ParamId() id:number){ /** Aqui ultilizamos um decorator personalizado , podemos usar nos outros tambem */
 
         return this.userService.show(id);
     }
