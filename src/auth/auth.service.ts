@@ -1,6 +1,9 @@
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 import {JwtService} from "@nestjs/jwt";
+import { Prisma, User } from "@prisma/client";
 import { PrismaService } from "src/prisma/prisma.service";
+import { UserService } from "src/user/user.service";
+import { AuthRegisterDTO } from "./dto/auth-register.dto";
 
 @Injectable()
 export class AuthService{
@@ -8,10 +11,23 @@ export class AuthService{
         constructor(
             private readonly jwtService:JwtService,
             private readonly prisma:PrismaService,
+            private readonly userService:UserService,
             ){}
 
-            async createToken(){
-               // return this.jwtService.sign();
+            async createToken(user:User){
+                return {
+
+                  accessToken: this.jwtService.sign({
+                     id: user.id,
+                     name:user.name,
+                   },{
+                     expiresIn:"1 day",
+                     subject:String(user.id),
+                     issuer:'login',
+                     audience:'users'
+                   })
+                   
+               } 
             }
 
             async checkToken(token:string){
@@ -32,7 +48,7 @@ export class AuthService{
                   
                }
 
-               return user;
+               return this.createToken(user);
 
             }
 
@@ -58,7 +74,7 @@ export class AuthService{
 
                //validar token
                const id =0;
-               await this.prisma.user.update({
+            const user = await this.prisma.user.update({
                   where:{
                      id,
                   },
@@ -67,7 +83,15 @@ export class AuthService{
                   }  
                });
 
-               return true;
+               return this.createToken(user);
+
+            }
+
+            async register(data:AuthRegisterDTO){
+
+               const user = await this.userService.create(data)
+
+                return this.createToken(user);
 
             }
 
