@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Put,ParseIntPipe, UseInterceptors, } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put,ParseIntPipe, UseInterceptors,UseGuards } from "@nestjs/common";
 import { ParamId } from "src/decorators/param-id.decorator";
 import { Role } from "src/enums/role.enum";
 import { Roles } from "src/decorators/roles.decorator";
@@ -7,7 +7,9 @@ import { CreateUserDTO } from "./dto/create-user.dto";
 import { UpdatePatchUserDTO } from "./dto/update-patch-user.dto";
 import { UpdatePutUserDTO } from "./dto/update-put-user.dto";
 import { UserService } from "./user.service";
-
+import { RoleGuard } from "src/guards/role.guard";
+import { AuthGuard } from "src/guards/auth.guard";
+@UseGuards(AuthGuard, RoleGuard)
 @Controller('users')
 export class UserController{
 
@@ -16,12 +18,15 @@ export class UserController{
     ){}
 
    // @UseInterceptors(LogInterceptor) Ativa o Intercptor de forma local
+ 
    @Roles(Role.Admin)//aqui permite o acesso a penas a um admin 
     @Post()
     async create(@Body() body:CreateUserDTO){
         return this.userService.create(body); 
     }
 
+    
+    @Roles(Role.Admin)//aqui permite o acesso a penas a um admin
     @Get()
     async list(){
         return this.userService.list();
