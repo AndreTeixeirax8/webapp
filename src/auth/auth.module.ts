@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { forwardRef, Module } from "@nestjs/common";
 import { JwtModule } from "@nestjs/jwt";
 import { PrismaModule } from "src/prisma/prisma.module";
 import { UserModule } from "src/user/user.module";
@@ -8,11 +8,12 @@ import { AuthService } from "./auth.service";
 @Module({
     imports:[JwtModule.register({
         secret:"segredotemqueter32digitos",
-    }),UserModule,
+    }),forwardRef(()=>UserModule) ,//Usaro o forwardRef para resolver dependencia circular
     PrismaModule
 ],
     controllers:[AuthController],
-    providers:[AuthService]//todo serviço é um provider dentro do modulo
+    providers:[AuthService],//todo serviço é um provider dentro do modulo
+    exports:[AuthService]
 })
 export class AuthModule{
 
