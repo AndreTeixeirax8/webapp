@@ -1,4 +1,5 @@
 import { Body, Controller, Post,Headers,UseGuards,Req } from "@nestjs/common";
+import { User } from "src/decorators/user.decorator copy";
 import { AuthGuard } from "src/guards/auth.guard";
 import { UserService } from "src/user/user.service";
 import { AuthService } from "./auth.service";
@@ -45,8 +46,8 @@ export class AuthController{
 
     @UseGuards(AuthGuard)
     @Post('me')
-    async me(@Req()req){
-        return{me:'ok',data:req.tokenPayLoad}
+    async me(@User()user){
+        return{user}
         //return this.authService.checkToken((token ?? '').split(' ')[1]);
 
     }
