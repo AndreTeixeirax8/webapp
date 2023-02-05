@@ -9,7 +9,9 @@ import { UpdatePutUserDTO } from "./dto/update-put-user.dto";
 import { UserService } from "./user.service";
 import { RoleGuard } from "src/guards/role.guard";
 import { AuthGuard } from "src/guards/auth.guard";
-@UseGuards(AuthGuard, RoleGuard)//não inverter as ordens 
+import { ThrottlerGuard } from "@nestjs/throttler/dist/throttler.guard";
+//@UserGuards(ThrottlerGuard({})) usar para proteger a aplicação cotnra DDOS
+@UseGuards(AuthGuard, RoleGuard)//não inverter as ordens porem o ThrottlerGuard tem que vir primeiro para proteger a api 
 @Controller('users')
 export class UserController{
 
