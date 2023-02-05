@@ -4,6 +4,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDTO } from './dto/create-user.dto';
 import { UpdatePatchUserDTO } from './dto/update-patch-user.dto';
 import { UpdatePutUserDTO } from './dto/update-put-user.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService{
@@ -11,6 +12,10 @@ export class UserService{
     constructor(private readonly prisma:PrismaService){}
 
    async create(data:CreateUserDTO){
+        /** o numero determina quanto de processamento o servidor vai usar , 
+        quanto maior mais lento e um hash mais forte */ 
+        data.password = await bcrypt.hash(data.password,2)
+
 
        return await this.prisma.user.create({
             data,
@@ -37,6 +42,8 @@ export class UserService{
 
         await this.exists(id);
 
+        data.password = await bcrypt.hash(data.password,2)
+
         return this.prisma.user.update({
             data,
             where:{
@@ -48,6 +55,8 @@ export class UserService{
     async updatePartial(id:number,data:UpdatePatchUserDTO){
 
         await this.exists(id);
+
+        data.password = await bcrypt.hash(data.password,2) //verificar  se não vai dar problema
 
         return this.prisma.user.update({
             data,

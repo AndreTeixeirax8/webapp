@@ -9,7 +9,7 @@ import { UpdatePutUserDTO } from "./dto/update-put-user.dto";
 import { UserService } from "./user.service";
 import { RoleGuard } from "src/guards/role.guard";
 import { AuthGuard } from "src/guards/auth.guard";
-@UseGuards(AuthGuard, RoleGuard)
+@UseGuards(AuthGuard, RoleGuard)//não inverter as ordens 
 @Controller('users')
 export class UserController{
 

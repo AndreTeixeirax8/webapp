@@ -4,6 +4,7 @@ import { Prisma, User } from "@prisma/client";
 import { PrismaService } from "src/prisma/prisma.service";
 import { UserService } from "src/user/user.service";
 import { AuthRegisterDTO } from "./dto/auth-register.dto";
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService{
@@ -60,17 +61,22 @@ export class AuthService{
 
              const user = await this.prisma.user.findFirst({
                   where:{
-                     email,
-                     password
+                     email
                   }
                });
 
                if(!user){
-                  throw new UnauthorizedException("Email ou senha invalido");
-                  
+                  throw new UnauthorizedException("Email ou senha invalido");   
                }
 
+              if (!await bcrypt.compare(password,user.password)){
+               throw new UnauthorizedException("Email ou senha invalido"); 
+              }
                return this.createToken(user);
+              
+
+
+              
 
             }
 
