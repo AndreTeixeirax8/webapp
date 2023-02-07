@@ -1,5 +1,4 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { count } from 'console';
 import { CreateUserDTO } from './dto/create-user.dto';
 import { UpdatePatchUserDTO } from './dto/update-patch-user.dto';
 import { UpdatePutUserDTO } from './dto/update-put-user.dto';
@@ -16,16 +15,6 @@ export class UserService{
         private readonly userRepository:Repository<UserEntity>
         ){}
 
-        /*
-   async create(data:CreateUserDTO){
-        /** o numero determina quanto de processamento o servidor vai usar , 
-        quanto maior mais lento e um hash mais forte  
-        data.password = await bcrypt.hash(data.password,2)
-
-
-       return await this.userRepository.create(data);
-    }
-        */
     async create(data: CreateUserDTO) {
         if (
           await this.userRepository.exist({
@@ -46,25 +35,6 @@ export class UserService{
         return this.userRepository.save(user);
       }
 
-    /*
-
-    async list(){
-
-        return this.prisma.user.findMany();
-    }
-
-    async show(id:number){
-
-        await this.exists(id);
-
-        return this.prisma.user.findUnique({
-            where:{
-                id,
-            }
-        })
-    } 
-*/
-
 
 async list() {
     return this.userRepository.find();
@@ -77,23 +47,7 @@ async list() {
       id,
     });
   }
-  /*
-
-    async update(id:number,data:UpdatePutUserDTO){
-
-        await this.exists(id);
-
-        data.password = await bcrypt.hash(data.password,2)
-
-        return this.prisma.user.update({
-            data,
-            where:{
-                id
-            }
-        });
-    }
-*/
-
+  
 async update(
     id: number,
     { email, name, password, birthAt, role }: UpdatePutUserDTO,
@@ -114,22 +68,6 @@ async update(
 
     return this.show(id);
   }
-
-  /*
-    async updatePartial(id:number,data:UpdatePatchUserDTO){
-
-        await this.exists(id);
-
-        data.password = await bcrypt.hash(data.password,2) //verificar  se não vai dar problema
-
-        return this.prisma.user.update({
-            data,
-            where:{
-                id
-            }
-        });
-    }
-    */
 
     async updatePartial(
         id: number,
@@ -165,17 +103,6 @@ async update(
         return this.show(id);
       }
 
-      /*
-    async delete(id:number){
-
-        await this.exists(id);
-
-        return  this.prisma.user.delete({
-            where:{
-                id
-            }
-        });
-    }*/
     async delete(id: number) {
         await this.exists(id);
     
@@ -184,18 +111,6 @@ async update(
         return true;
       }
     
-/*
-    async exists(id: number){
-        if(!(await this.prisma.user.count({
-            where:{
-                id
-            }
-        })))
-        {
-            throw new NotFoundException(`Usuario informado ${id} não existe`)
-        }
-
-    }*/
 
     async exists(id: number) {
         if (

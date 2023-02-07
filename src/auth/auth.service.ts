@@ -22,21 +22,6 @@ export class AuthService{
             private readonly mailer:MailerService,
             ){}
 
-       /*  async createToken(user:User){//aqui estava userentity
-                return {
-
-                  accessToken: this.jwtService.sign({
-                     id: user.id,
-                     name:user.name,
-                   },{
-                     expiresIn:"1 day",
-                     subject:String(user.id),
-                     issuer:this.issuer,
-                     audience:this.audience
-                   })
-                   
-               } 
-            }*/
             createToken(user: UserEntity) {
                return {
                  accessToken: this.jwtService.sign(
@@ -78,24 +63,6 @@ export class AuthService{
                   return false;
                }
             }
-
-            /*
-            async login(email:string,password:string){
-
-               const user = this.userRepository.findOneBy({
-                  email
-               })
-
-               if(!user){
-                  throw new UnauthorizedException("Email ou senha invalido");   
-               }
-
-              if (!await bcrypt.compare(password,password)){
-               throw new UnauthorizedException("Email ou senha invalido"); 
-              }
-               return this.createToken(user);  
-
-            }*/
 
             async login(email: string, password: string) {
                const user = await this.userRepository.findOneBy({
@@ -147,18 +114,6 @@ export class AuthService{
 
             }
 
-           /* async reset(password:string,token:string){
-
-               //validar token
-               const id =0;
-            const user = await this.userRepository.update(Number(data.id),);
-
-               return this.createToken(user);
-
-            }*/
-
-          
-       
             async reset(password: string, token: string) {
                try {
                  const data: any = this.jwtService.verify(token, {
@@ -185,14 +140,6 @@ export class AuthService{
                }
              }
        
-               /*
-            async register(data:AuthRegisterDTO){
-
-               const user = await this.userService.create(data)
-
-                return this.createToken(user);
-
-            }*/
             async register(data: AuthRegisterDTO) {
                delete data.role;
            
