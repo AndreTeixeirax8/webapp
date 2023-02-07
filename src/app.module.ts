@@ -7,6 +7,8 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import {PugAdapter} from '@nestjs-modules/mailer/dist/adapters/pug.adapter'
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { UserEntity } from './user/entity/user.entity';
 
 @Module({
   imports: [ConfigModule.forRoot(),
@@ -18,9 +20,16 @@ import {PugAdapter} from '@nestjs-modules/mailer/dist/adapters/pug.adapter'
   }),
      forwardRef(()=>UserModule) ,forwardRef(()=>AuthModule),
       MailerModule.forRoot({
-        transport:'smtps://conner9@ethereal.email:v39aSvjMp3KG877Auv@smtp.ethereal.email',
+        transport:{
+          host:'smtp.ethereal.email',
+          port:587,
+            auth:{
+              user:'conner9@ethereal.email',
+              pass:'v39aSvjMp3KG877Auv'
+            }
+        },
         defaults:{
-          from:'',
+          from:'"teste nome "<conner9@ethereal.email>',
         },
         template: {
           dir: __dirname + '/template',
@@ -29,6 +38,17 @@ import {PugAdapter} from '@nestjs-modules/mailer/dist/adapters/pug.adapter'
             strict:true,
           },
         }
+      }),
+      TypeOrmModule.forRoot({
+        type:'mysql',
+        host:'localhost',
+        port:3306,
+        username:process.env.DB_USERNAME,
+        password:process.env.DB_PASSWORD,
+        database:process.env.DB_DATABASE,
+        entities:[UserEntity],
+        synchronize:true //deixa true só no ambiente de desenvolvimento
+
       })
     ],/** Aqui vai os modulos que ele vai importar, receber outros modulos */
   controllers: [AppController],/**Controllers disponibilizados por esse modulo */
