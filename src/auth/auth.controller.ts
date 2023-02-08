@@ -54,7 +54,7 @@ export class AuthController{
     @Post('me')
     async me(@User()user){
         return{user}
-        //return this.authService.checkToken((token ?? '').split(' ')[1]);
+        //Rota para saber de quem é o token infromado no berer
 
     }
 

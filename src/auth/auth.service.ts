@@ -31,7 +31,7 @@ export class AuthService{
                      email: user.email,
                    },
                    {
-                     expiresIn: '7 days',
+                     expiresIn: '2 days',
                      subject: String(user.id),
                      issuer: this.issuer,
                      audience: this.audience,
