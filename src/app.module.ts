@@ -9,6 +9,8 @@ import { UserModule } from './user/user.module';
 import {PugAdapter} from '@nestjs-modules/mailer/dist/adapters/pug.adapter'
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from './user/entity/user.entity';
+import { ClienteEntity } from './cliente/entity/cliente.entity';
+import { ClienteModule } from './cliente/cliente.module';
 
 @Module({
   imports: [ConfigModule.forRoot(),
@@ -18,7 +20,7 @@ import { UserEntity } from './user/entity/user.entity';
     limit:10 //quantos acessos por minuto a aplicação pode receber
 
   }),
-     forwardRef(()=>UserModule) ,forwardRef(()=>AuthModule),
+     forwardRef(()=>UserModule) ,forwardRef(()=>AuthModule),forwardRef(()=>ClienteModule),
       MailerModule.forRoot({
         transport:{
           host:'smtp.ethereal.email',
@@ -46,7 +48,7 @@ import { UserEntity } from './user/entity/user.entity';
         username:process.env.DB_USERNAME,
         password:process.env.DB_PASSWORD,
         database:process.env.DB_DATABASE,
-        entities:[UserEntity],
+        entities:[UserEntity,ClienteEntity],
         synchronize:true //deixa true só no ambiente de desenvolvimento
 
       })

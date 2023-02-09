@@ -1,4 +1,5 @@
 import { Body, Controller, Post } from "@nestjs/common";
+import { ClienteService } from "./cliente.service";
 import {CriarClienteDTO} from "./dtos/criar-cliente.dto"
 
 @Controller('clientes')
