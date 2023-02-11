@@ -1,4 +1,6 @@
-import { Body, Controller, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Post, UseGuards } from "@nestjs/common";
+import { Roles } from "src/decorators/roles.decorator";
+import { Role } from "src/enums/role.enum";
 import { AuthGuard } from "src/guards/auth.guard";
 import { RoleGuard } from "src/guards/role.guard";
 import { ClienteService } from "./cliente.service";
@@ -13,9 +15,15 @@ export class ClienteController{
         private readonly clienteService:ClienteService,
     ){}
 
-
+    @Roles(Role.Admin)    
     @Post()
     async create(@Body() body:CriarClienteDTO){
-        return this.clienteService.create(body); 
+        return this.clienteService.criar(body); 
+    }
+
+    @Roles(Role.Admin)
+    @Get()
+    async list(){
+        return this.clienteService.buscaTodos();
     }
 }

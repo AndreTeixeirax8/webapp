@@ -11,7 +11,7 @@ export class ClienteService{
         private readonly clienteRepository:Repository<ClienteEntity>
         ){}
 
-        async create(data: CriarClienteDTO) {
+        async criar(data: CriarClienteDTO) {
             if (
               await this.clienteRepository.exist({
                 where: {
@@ -22,12 +22,13 @@ export class ClienteService{
               throw new BadRequestException('Este e-mail já está sendo usado.');
             }
         
-          //  const salt = await bcrypt.genSalt();
-        
-           // data.password = await bcrypt.hash(data.password, salt);
-        
+       
             const user = this.clienteRepository.create(data);
         
             return this.clienteRepository.save(user);
+          }
+
+          async buscaTodos() {
+            return this.clienteRepository.find();
           }
 }
