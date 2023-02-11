@@ -8,8 +8,8 @@ export class  CriarClienteDTO{
     email:string;
  
     @IsOptional()
-    @IsDateString()
-    birthAt: string;
+    //@IsDateString()
+    birthAt: Date;
 
     @IsInt()
     cidade:number;

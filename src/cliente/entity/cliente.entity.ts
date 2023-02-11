@@ -16,6 +16,7 @@ export class ClienteEntity{
         type:'date',
         nullable:true,
     })
+    
     birthAt:Date;
 
     @CreateDateColumn()

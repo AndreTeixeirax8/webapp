@@ -1,8 +1,9 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { Like, Repository } from "typeorm";
 import { ClienteEntity } from "./entity/cliente.entity";
 import {CriarClienteDTO} from "./dtos/criar-cliente.dto"
+import { BuscarClientePorNomeDTO } from "./dtos/busca-cliente-por-nome.dto";
 
 @Injectable()
 export class ClienteService{
@@ -31,4 +32,13 @@ export class ClienteService{
           async buscaTodos() {
             return this.clienteRepository.find();
           }
+
+          async show(nome: string) {
+            
+            return this.clienteRepository.find({
+              where:[{name: Like(`%${nome}%`)}]
+            });
+          }
+
+
 }
