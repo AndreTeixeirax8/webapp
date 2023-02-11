@@ -1,9 +1,10 @@
-import { BadRequestException, Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Like, Repository } from "typeorm";
 import { ClienteEntity } from "./entity/cliente.entity";
 import {CriarClienteDTO} from "./dtos/criar-cliente.dto"
-import { BuscarClientePorNomeDTO } from "./dtos/busca-cliente-por-nome.dto";
+import { ClienteErrorApiEnum } from "src/common/enums/error-api.enum";
+
 
 @Injectable()
 export class ClienteService{
@@ -34,10 +35,13 @@ export class ClienteService{
           }
 
           async show(nome: string) {
+
+            const busca =  await this.clienteRepository.find({
+                 where:[{name: Like(`%${nome}%`)}]
+               });
             
-            return this.clienteRepository.find({
-              where:[{name: Like(`%${nome}%`)}]
-            });
+            if (busca.length==0 ) throw new NotFoundException(ClienteErrorApiEnum.NaoEncotrado);
+            return busca ;
           }
 
 
