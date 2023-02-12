@@ -7,6 +7,7 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
+import { ParamId } from 'src/decorators/param-id.decorator';
 import { Roles } from 'src/decorators/roles.decorator';
 import { Role } from 'src/enums/role.enum';
 import { AuthGuard } from 'src/guards/auth.guard';
@@ -36,5 +37,10 @@ export class ClienteController {
   @Get(':nome')
   async buscaPorNome(@Param('nome') nome: string) {
     return this.clienteService.buscaPorNome(nome);
+  }
+
+  @Get(':id')
+  async buscaPorId(@ParamId() id: number) {
+    return this.clienteService.buscaPorId(id);
   }
 }

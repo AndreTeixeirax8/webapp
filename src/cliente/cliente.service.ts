@@ -43,4 +43,24 @@ export class ClienteService {
       throw new NotFoundException(ClienteErrorApiEnum.NaoEncotrado);
     return busca;
   }
+
+  async buscaPorId(id: number) {
+    await this.verificaSeExite(id);
+
+    return this.clienteRepository.findOneBy({
+      id,
+    });
+  }
+
+  async verificaSeExite(id: number) {
+    if (
+      !(await this.clienteRepository.exist({
+        where: {
+          id,
+        },
+      }))
+    ) {
+      throw new NotFoundException(`O usuário ${id} não existe.`);
+    }
+  }
 }

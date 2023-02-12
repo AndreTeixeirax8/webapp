@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateUserDTO } from './dto/create-user.dto';
 import { UpdatePatchUserDTO } from './dto/update-patch-user.dto';
 import { UpdatePutUserDTO } from './dto/update-put-user.dto';
@@ -8,49 +12,47 @@ import { UserEntity } from './entity/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
-export class UserService{
+export class UserService {
+  constructor(
+    @InjectRepository(UserEntity)
+    private readonly userRepository: Repository<UserEntity>
+  ) {}
 
-    constructor(
-        @InjectRepository(UserEntity)
-        private readonly userRepository:Repository<UserEntity>
-        ){}
+  async criaUmCliente(data: CreateUserDTO) {
+    if (
+      await this.userRepository.exist({
+        where: {
+          email: data.email,
+        },
+      })
+    ) {
+      throw new BadRequestException('Este e-mail já está sendo usado.');
+    }
 
-    async create(data: CreateUserDTO) {
-        if (
-          await this.userRepository.exist({
-            where: {
-              email: data.email,
-            },
-          })
-        ) {
-          throw new BadRequestException('Este e-mail já está sendo usado.');
-        }
-    
-        const salt = await bcrypt.genSalt();
-    
-        data.password = await bcrypt.hash(data.password, salt);
-    
-        const user = this.userRepository.create(data);
-    
-        return this.userRepository.save(user);
-      }
+    const salt = await bcrypt.genSalt();
 
+    data.password = await bcrypt.hash(data.password, salt);
 
-async list() {
+    const user = this.userRepository.create(data);
+
+    return this.userRepository.save(user);
+  }
+
+  async BuscaTodos() {
     return this.userRepository.find();
   }
 
-  async show(id: number) {
+  async buscaPorId(id: number) {
     await this.exists(id);
 
     return this.userRepository.findOneBy({
       id,
     });
   }
-  
-async update(
+
+  async update(
     id: number,
-    { email, name, password, birthAt, role }: UpdatePutUserDTO,
+    { email, name, password, birthAt, role }: UpdatePutUserDTO
   ) {
     await this.exists(id);
 
@@ -66,62 +68,60 @@ async update(
       role,
     });
 
-    return this.show(id);
+    return this.buscaPorId(id);
   }
 
-    async updatePartial(
-        id: number,
-        { email, name, password, birthAt, role }: UpdatePatchUserDTO,
-      ) {
-        await this.exists(id);
-    
-        const data: any = {};
-    
-        if (birthAt) {
-          data.birthAt = new Date(birthAt);
-        }
-    
-        if (email) {
-          data.email = email;
-        }
-    
-        if (name) {
-          data.name = name;
-        }
-    
-        if (password) {
-          const salt = await bcrypt.genSalt();
-          data.password = await bcrypt.hash(password, salt);
-        }
-    
-        if (role) {
-          data.role = role;
-        }
-    
-        await this.userRepository.update(id, data);
-    
-        return this.show(id);
-      }
+  async updatePartial(
+    id: number,
+    { email, name, password, birthAt, role }: UpdatePatchUserDTO
+  ) {
+    await this.exists(id);
 
-    async delete(id: number) {
-        await this.exists(id);
-    
-        await this.userRepository.delete(id);
-    
-        return true;
-      }
-    
+    const data: any = {};
 
-    async exists(id: number) {
-        if (
-          !(await this.userRepository.exist({
-            where: {
-              id,
-            },
-          }))
-        ) {
-          throw new NotFoundException(`O usuário ${id} não existe.`);
-        }
-      }
-    
+    if (birthAt) {
+      data.birthAt = new Date(birthAt);
+    }
+
+    if (email) {
+      data.email = email;
+    }
+
+    if (name) {
+      data.name = name;
+    }
+
+    if (password) {
+      const salt = await bcrypt.genSalt();
+      data.password = await bcrypt.hash(password, salt);
+    }
+
+    if (role) {
+      data.role = role;
+    }
+
+    await this.userRepository.update(id, data);
+
+    return this.buscaPorId(id);
+  }
+
+  async delete(id: number) {
+    await this.exists(id);
+
+    await this.userRepository.delete(id);
+
+    return true;
+  }
+
+  async exists(id: number) {
+    if (
+      !(await this.userRepository.exist({
+        where: {
+          id,
+        },
+      }))
+    ) {
+      throw new NotFoundException(`O usuário ${id} não existe.`);
+    }
+  }
 }
