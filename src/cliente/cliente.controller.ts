@@ -29,12 +29,12 @@ export class ClienteController {
 
   @Roles(Role.Admin)
   @Get()
-  async list() {
+  async buscaTodos() {
     return this.clienteService.buscaTodos();
   }
 
   @Get(':nome')
-  async show(@Param('nome') nome: string) {
-    return this.clienteService.show(nome);
+  async buscaPorNome(@Param('nome') nome: string) {
+    return this.clienteService.buscaPorNome(nome);
   }
 }

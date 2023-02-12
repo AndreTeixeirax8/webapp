@@ -26,9 +26,7 @@ export class ClienteService {
     ) {
       throw new BadRequestException('Este e-mail já está sendo usado.');
     }
-
     const user = this.clienteRepository.create(data);
-
     return this.clienteRepository.save(user);
   }
 
@@ -36,7 +34,7 @@ export class ClienteService {
     return this.clienteRepository.find();
   }
 
-  async show(nome: string) {
+  async buscaPorNome(nome: string) {
     const busca = await this.clienteRepository.find({
       where: [{ name: Like(`%${nome}%`) }],
     });
