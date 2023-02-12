@@ -26,7 +26,16 @@ export class ClienteService {
         },
       })
     ) {
-      throw new BadRequestException('Este e-mail já está sendo usado.');
+      throw new BadRequestException(ClienteErrorApiEnum.EmailJaCadastrado);
+    }
+    if (
+      await this.clienteRepository.exist({
+        where: {
+          cpf: data.cpf,
+        },
+      })
+    ) {
+      throw new BadRequestException(ClienteErrorApiEnum.CpfJaCadastrado);
     }
     const user = this.clienteRepository.create(data);
     return this.clienteRepository.save(user);
@@ -47,14 +56,14 @@ export class ClienteService {
   }
 
   async buscaPorId(id: number) {
-    await this.verificaSeExite(id);
+    await this.verificaSeExiteId(id);
 
     return this.clienteRepository.findOneBy({
       id,
     });
   }
 
-  async verificaSeExite(id: number) {
+  async verificaSeExiteId(id: number) {
     if (
       !(await this.clienteRepository.exist({
         where: {
@@ -67,7 +76,7 @@ export class ClienteService {
   }
 
   async alteraUmRegistro(id: number, alteraClientePutDTO: AlteraClientePutDTO) {
-    await this.verificaSeExite(id);
+    await this.verificaSeExiteId(id);
     await this.clienteRepository.update(id, alteraClientePutDTO);
 
     return this.buscaPorId(id);
@@ -77,9 +86,17 @@ export class ClienteService {
     id: number,
     alteraClientePatchDTO: AlteraClientePatchDTO
   ) {
-    await this.verificaSeExite(id);
+    await this.verificaSeExiteId(id);
     await this.clienteRepository.update(id, alteraClientePatchDTO);
 
     return this.buscaPorId(id);
+  }
+
+  async delete(id: number) {
+    await this.verificaSeExiteId(id);
+
+    await this.clienteRepository.delete(id);
+
+    return true;
   }
 }

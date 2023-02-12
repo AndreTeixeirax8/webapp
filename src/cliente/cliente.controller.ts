@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseIntPipe,
@@ -63,5 +64,10 @@ export class ClienteController {
     @Param('id', ParseIntPipe) id: number
   ) {
     return this.clienteService.alteraUmRegistroParcial(id, data);
+  }
+
+  @Delete(':id')
+  async delete(@Param('id', ParseIntPipe) id: number) {
+    return this.clienteService.delete(id);
   }
 }
