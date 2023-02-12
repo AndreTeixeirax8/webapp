@@ -4,6 +4,7 @@ import {
   Get,
   Param,
   ParseIntPipe,
+  Patch,
   Post,
   Put,
   Query,
@@ -15,6 +16,7 @@ import { Role } from 'src/enums/role.enum';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { RoleGuard } from 'src/guards/role.guard';
 import { ClienteService } from './cliente.service';
+import { AlteraClientePatchDTO } from './dtos/altera-cliente-patch.dto';
 import { AlteraClientePutDTO } from './dtos/altera-cliente-total-put.dto';
 import { CriarClienteDTO } from './dtos/criar-cliente.dto';
 import { ClienteEntity } from './entity/cliente.entity';
@@ -53,5 +55,13 @@ export class ClienteController {
     @Param('id', ParseIntPipe) id: number
   ) {
     return this.clienteService.alteraUmRegistro(id, data);
+  }
+
+  @Patch(':id')
+  async alteraUmRegistroParcial(
+    @Body() data: AlteraClientePatchDTO,
+    @Param('id', ParseIntPipe) id: number
+  ) {
+    return this.clienteService.alteraUmRegistroParcial(id, data);
   }
 }

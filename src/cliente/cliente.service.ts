@@ -9,6 +9,7 @@ import { ClienteEntity } from './entity/cliente.entity';
 import { CriarClienteDTO } from './dtos/criar-cliente.dto';
 import { ClienteErrorApiEnum } from 'src/common/enums/error-api.enum';
 import { AlteraClientePutDTO } from './dtos/altera-cliente-total-put.dto';
+import { AlteraClientePatchDTO } from './dtos/altera-cliente-patch.dto';
 
 @Injectable()
 export class ClienteService {
@@ -68,6 +69,16 @@ export class ClienteService {
   async alteraUmRegistro(id: number, alteraClientePutDTO: AlteraClientePutDTO) {
     await this.verificaSeExite(id);
     await this.clienteRepository.update(id, alteraClientePutDTO);
+
+    return this.buscaPorId(id);
+  }
+
+  async alteraUmRegistroParcial(
+    id: number,
+    alteraClientePatchDTO: AlteraClientePatchDTO
+  ) {
+    await this.verificaSeExite(id);
+    await this.clienteRepository.update(id, alteraClientePatchDTO);
 
     return this.buscaPorId(id);
   }
