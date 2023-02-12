@@ -3,7 +3,9 @@ import {
   Controller,
   Get,
   Param,
+  ParseIntPipe,
   Post,
+  Put,
   Query,
   UseGuards,
 } from '@nestjs/common';
@@ -13,6 +15,7 @@ import { Role } from 'src/enums/role.enum';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { RoleGuard } from 'src/guards/role.guard';
 import { ClienteService } from './cliente.service';
+import { AlteraClientePutDTO } from './dtos/altera-cliente-total-put.dto';
 import { CriarClienteDTO } from './dtos/criar-cliente.dto';
 import { ClienteEntity } from './entity/cliente.entity';
 
@@ -42,5 +45,13 @@ export class ClienteController {
   @Get(':id')
   async buscaPorId(@ParamId() id: number) {
     return this.clienteService.buscaPorId(id);
+  }
+
+  @Put(':id')
+  async alteraUmRegistro(
+    @Body() data: AlteraClientePutDTO,
+    @Param('id', ParseIntPipe) id: number
+  ) {
+    return this.clienteService.alteraUmRegistro(id, data);
   }
 }

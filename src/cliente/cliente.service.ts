@@ -8,6 +8,7 @@ import { Like, Repository } from 'typeorm';
 import { ClienteEntity } from './entity/cliente.entity';
 import { CriarClienteDTO } from './dtos/criar-cliente.dto';
 import { ClienteErrorApiEnum } from 'src/common/enums/error-api.enum';
+import { AlteraClientePutDTO } from './dtos/altera-cliente-total-put.dto';
 
 @Injectable()
 export class ClienteService {
@@ -62,5 +63,12 @@ export class ClienteService {
     ) {
       throw new NotFoundException(`O usuário ${id} não existe.`);
     }
+  }
+
+  async alteraUmRegistro(id: number, alteraClientePutDTO: AlteraClientePutDTO) {
+    await this.verificaSeExite(id);
+    await this.clienteRepository.update(id, alteraClientePutDTO);
+
+    return this.buscaPorId(id);
   }
 }
