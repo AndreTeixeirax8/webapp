@@ -1,40 +1,46 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity('cliente')
-export class ClienteEntity{
+export class ClienteEntity {
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @PrimaryGeneratedColumn()
-    id:number;
+  @Column()
+  name: string;
 
-    @Column()
-    name:string;
+  @Column()
+  email: string;
 
-    @Column()
-    email:string;
+  @Column({
+    type: 'date',
+    nullable: true,
+  })
+  birthAt: Date;
 
-    @Column({
-        type:'date',
-        nullable:true,
-    })
-    
-    birthAt:Date;
+  @CreateDateColumn()
+  createdAt: string;
 
-    @CreateDateColumn()
-    createdAt:string;
+  @UpdateDateColumn()
+  updatedAt: string;
 
-    @UpdateDateColumn()
-    updatedAt:string;
+  @Column({ nullable: true })
+  cidade: number;
 
-    @Column({nullable: true})
-    cidade:number;
+  @Column({ nullable: true })
+  unidadeFederal: number;
 
-    @Column({nullable: true})
-    unidadeFederal:number;
+  @Column({ nullable: true })
+  telefone: string;
 
-    @Column({nullable: true})
-    telefone:string;
+  @Column()
+  cpf: string;
 
-    @Column()
-    cpf:string;
-
+  @Column()
+  role: number;
 }

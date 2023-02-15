@@ -1,28 +1,34 @@
-import { IsDateString, IsEmail, IsInt, IsOptional, IsString } from "class-validator";
+import {
+  IsDateString,
+  IsEmail,
+  IsInt,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
-export class  CriarClienteDTO{
-    @IsString()
-    name:string;
+export class CriarClienteDTO {
+  @IsString()
+  name: string;
 
-    @IsEmail()
-    email:string;
- 
-    @IsOptional()
-    //@IsDateString()
-    birthAt: Date;
+  @IsEmail()
+  email: string;
 
-    @IsInt()
-    cidade:number;
+  @IsOptional()
+  //@IsDateString()
+  birthAt: Date;
 
-    @IsInt()
-    unidadeFederal:number;
+  @IsInt()
+  cidade: number;
 
-    @IsString()
-    telefone:string;
+  @IsInt()
+  unidadeFederal: number;
 
-    @IsString()
-    cpf:string;
+  @IsString()
+  telefone: string;
 
+  @IsString()
+  cpf: string;
 
-    
+  @IsInt()
+  role: number;
 }
