@@ -5,6 +5,6 @@ export enum ClienteErrorApiEnum {
 }
 
 export enum CidadeErrorApiEnum {
-  NaoEncotrado = 'Cidade não encontrado',
+  NaoEncotrado = 'Cidade não encontrada',
   CidadeJaCadastrada = 'Já possui uma cidade com esse nome',
 }

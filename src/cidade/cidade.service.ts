@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CriaCidadeDto } from 'src/cidade/dtos/cria-cidade.dto';
 import { CidadeErrorApiEnum } from 'src/common/enums/error-api.enum';
@@ -29,5 +33,25 @@ export class CidadeService {
 
   async buscaTodos() {
     return this.cidadeRepository.find();
+  }
+
+  async verificaSeExiteId(id: number) {
+    if (
+      !(await this.cidadeRepository.exist({
+        where: {
+          id,
+        },
+      }))
+    ) {
+      throw new NotFoundException(CidadeErrorApiEnum.NaoEncotrado);
+    }
+  }
+
+  async buscaPorId(id: number) {
+    await this.verificaSeExiteId(id);
+
+    return this.cidadeRepository.findOneBy({
+      id,
+    });
   }
 }

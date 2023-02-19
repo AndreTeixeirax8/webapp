@@ -10,6 +10,9 @@ import { CriarClienteDTO } from './dtos/criar-cliente.dto';
 import { ClienteErrorApiEnum } from 'src/common/enums/error-api.enum';
 import { AlteraClientePutDTO } from './dtos/altera-cliente-total-put.dto';
 import { AlteraClientePatchDTO } from './dtos/altera-cliente-patch.dto';
+import { PaginateQuery } from 'nestjs-paginate';
+import { paginate, Paginated } from 'nestjs-paginate/lib/paginate';
+import { FilterOperator } from 'nestjs-paginate/lib/operator';
 
 @Injectable()
 export class ClienteService {
@@ -98,5 +101,31 @@ export class ClienteService {
     await this.clienteRepository.delete(id);
 
     return true;
+  }
+
+  async buscaVariosPaginado(
+    query: PaginateQuery
+  ): Promise<Paginated<ClienteEntity>> {
+    return paginate(query, this.clienteRepository, {
+      select: [
+        'id',
+        'name',
+        'email',
+        'cpf',
+        'telefone',
+        'unidadeFederal',
+        'cidade',
+        'cidades.nome',
+      ],
+      relations: ['cidades'],
+      sortableColumns: ['id', 'name'],
+      // nullSort: 'last',
+      searchableColumns: ['id'],
+      defaultSortBy: [['id', 'ASC']],
+      defaultLimit: 10,
+      filterableColumns: {
+        id: [FilterOperator.EQ, FilterOperator.IN],
+      },
+    });
   }
 }

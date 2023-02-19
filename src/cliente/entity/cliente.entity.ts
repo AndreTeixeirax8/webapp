@@ -1,7 +1,11 @@
+import { CidadeEntity } from 'src/cidade/entity/cidade.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -43,4 +47,8 @@ export class ClienteEntity {
 
   @Column()
   role: number;
+
+  @ManyToOne(() => CidadeEntity, (cidades) => cidades.clientes)
+  @JoinColumn({ name: 'cidade_id' })
+  cidades: CidadeEntity;
 }

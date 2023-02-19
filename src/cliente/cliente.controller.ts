@@ -11,6 +11,7 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
+import { Paginate, PaginateQuery } from 'nestjs-paginate/lib/decorator';
 import { ParamId } from 'src/decorators/param-id.decorator';
 import { Roles } from 'src/decorators/roles.decorator';
 import { Role } from 'src/enums/role.enum';
@@ -32,6 +33,11 @@ export class ClienteController {
   @Post()
   async create(@Body() body: CriarClienteDTO) {
     return this.clienteService.criar(body);
+  }
+
+  @Get('listagem/paginada')
+  async buscaVariosPaginado(@Paginate() query: PaginateQuery) {
+    return this.clienteService.buscaVariosPaginado(query);
   }
 
   @Roles(Role.Admin)
