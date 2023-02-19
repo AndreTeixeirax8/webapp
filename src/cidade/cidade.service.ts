@@ -26,4 +26,8 @@ export class CidadeService {
     const cidade = this.cidadeRepository.create(data);
     return this.cidadeRepository.save(cidade);
   }
+
+  async buscaTodos() {
+    return this.cidadeRepository.find();
+  }
 }

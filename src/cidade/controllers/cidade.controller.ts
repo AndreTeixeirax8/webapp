@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { Roles } from 'src/decorators/roles.decorator';
 import { Role } from 'src/enums/role.enum';
 import { AuthGuard } from 'src/guards/auth.guard';
@@ -15,5 +15,11 @@ export class CidadeController {
   @Post()
   async criar(@Body() body: CriaCidadeDto) {
     return this.cidadeService.criar(body);
+  }
+
+  @Roles(Role.Admin)
+  @Get()
+  async buscaTodos() {
+    return this.cidadeService.buscaTodos();
   }
 }
