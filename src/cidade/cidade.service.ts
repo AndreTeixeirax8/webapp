@@ -61,4 +61,12 @@ export class CidadeService {
 
     return this.buscaPorId(id);
   }
+
+  async delete(id: number) {
+    await this.verificaSeExiteId(id);
+
+    await this.cidadeRepository.delete(id);
+
+    return true;
+  }
 }

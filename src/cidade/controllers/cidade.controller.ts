@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseIntPipe,
@@ -44,5 +45,10 @@ export class CidadeController {
     @Param('id', ParseIntPipe) id: number
   ) {
     return this.cidadeService.alteraUmRegistro(id, data);
+  }
+
+  @Delete(':id')
+  async delete(@Param('id', ParseIntPipe) id: number) {
+    return this.cidadeService.delete(id);
   }
 }
