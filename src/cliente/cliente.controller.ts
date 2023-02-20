@@ -8,7 +8,6 @@ import {
   Patch,
   Post,
   Put,
-  Query,
   UseGuards,
 } from '@nestjs/common';
 import { Paginate, PaginateQuery } from 'nestjs-paginate/lib/decorator';
@@ -21,7 +20,6 @@ import { ClienteService } from './cliente.service';
 import { AlteraClientePatchDTO } from './dtos/altera-cliente-patch.dto';
 import { AlteraClientePutDTO } from './dtos/altera-cliente-total-put.dto';
 import { CriarClienteDTO } from './dtos/criar-cliente.dto';
-import { ClienteEntity } from './entity/cliente.entity';
 
 //@UserGuards(ThrottlerGuard({})) usar para proteger a aplicação cotnra DDOS
 @UseGuards(AuthGuard, RoleGuard) //não inverter as ordens porem o ThrottlerGuard tem que vir primeiro para proteger a api

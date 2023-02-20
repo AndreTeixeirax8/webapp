@@ -5,7 +5,6 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -48,7 +47,7 @@ export class ClienteEntity {
   @Column()
   role: number;
 
-  @ManyToOne(() => CidadeEntity, (cidades) => cidades.clientes)
-  @JoinColumn({ name: 'cidade_id' })
+  @ManyToOne(() => CidadeEntity, (cidade) => cidade.clientes)
+  @JoinColumn({ name: 'cidade', referencedColumnName: 'id' })
   cidades: CidadeEntity;
 }

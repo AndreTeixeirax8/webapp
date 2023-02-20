@@ -119,7 +119,6 @@ export class ClienteService {
       ],
       relations: ['cidades'],
       sortableColumns: ['id', 'name'],
-      // nullSort: 'last',
       searchableColumns: ['id'],
       defaultSortBy: [['id', 'ASC']],
       defaultLimit: 10,
