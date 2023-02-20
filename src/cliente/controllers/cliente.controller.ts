@@ -16,10 +16,10 @@ import { Roles } from 'src/decorators/roles.decorator';
 import { Role } from 'src/enums/role.enum';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { RoleGuard } from 'src/guards/role.guard';
-import { ClienteService } from './cliente.service';
-import { AlteraClientePatchDTO } from './dtos/altera-cliente-patch.dto';
-import { AlteraClientePutDTO } from './dtos/altera-cliente-total-put.dto';
-import { CriarClienteDTO } from './dtos/criar-cliente.dto';
+import { ClienteService } from '../cliente.service';
+import { AlteraClientePatchDTO } from '../dtos/altera-cliente-patch.dto';
+import { AlteraClientePutDTO } from '../dtos/altera-cliente-total-put.dto';
+import { CriarClienteDTO } from '../dtos/criar-cliente.dto';
 
 //@UserGuards(ThrottlerGuard({})) usar para proteger a aplicação cotnra DDOS
 @UseGuards(AuthGuard, RoleGuard) //não inverter as ordens porem o ThrottlerGuard tem que vir primeiro para proteger a api
