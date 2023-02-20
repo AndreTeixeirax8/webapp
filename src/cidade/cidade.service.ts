@@ -4,10 +4,10 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CriaCidadeDto } from 'src/cidade/dtos/cria-cidade.dto';
 import { CidadeErrorApiEnum } from 'src/common/enums/error-api.enum';
 import { Repository } from 'typeorm';
-import { CidadeEntity } from './entity/cidade.entity';
+import { CriaCidadeDto, AlteraCidadePutDTO } from 'src/cidade/dtos';
+import { CidadeEntity } from 'src/cidade/entity';
 
 @Injectable()
 export class CidadeService {
@@ -53,5 +53,12 @@ export class CidadeService {
     return this.cidadeRepository.findOneBy({
       id,
     });
+  }
+
+  async alteraUmRegistro(id: number, alteraCidadePutDTO: AlteraCidadePutDTO) {
+    await this.verificaSeExiteId(id);
+    await this.cidadeRepository.update(id, alteraCidadePutDTO);
+
+    return this.buscaPorId(id);
   }
 }
