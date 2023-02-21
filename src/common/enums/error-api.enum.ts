@@ -8,3 +8,8 @@ export enum CidadeErrorApiEnum {
   NaoEncotrado = 'Cidade não encontrada',
   CidadeJaCadastrada = 'Já possui uma cidade com esse nome',
 }
+
+export enum UfErrorApiEnum {
+  NaoEncotrado = 'Unidade federal não encontrada',
+  UfJaCadastrada = 'Já possui uma unidade federal com esse nome',
+}

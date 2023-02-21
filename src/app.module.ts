@@ -13,6 +13,8 @@ import { ClienteEntity } from './cliente/entity/cliente.entity';
 import { ClienteModule } from './cliente/cliente.module';
 import { CidadeModule } from './cidade/cidade.module';
 import { CidadeEntity } from './cidade/entity/cidade.entity';
+import { UfModule } from './uf';
+import { UfEntity } from './uf/entity';
 
 @Module({
   imports: [
@@ -26,6 +28,7 @@ import { CidadeEntity } from './cidade/entity/cidade.entity';
     forwardRef(() => AuthModule),
     forwardRef(() => ClienteModule),
     CidadeModule,
+    UfModule,
     MailerModule.forRoot({
       transport: {
         host: 'smtp.ethereal.email',
@@ -53,7 +56,7 @@ import { CidadeEntity } from './cidade/entity/cidade.entity';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [UserEntity, ClienteEntity, CidadeEntity],
+      entities: [UserEntity, ClienteEntity, CidadeEntity, UfEntity],
       synchronize: true, //deixa true só no ambiente de desenvolvimento
     }),
   ] /** Aqui vai os modulos que ele vai importar, receber outros modulos */,
