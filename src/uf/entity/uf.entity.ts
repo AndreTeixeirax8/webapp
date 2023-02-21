@@ -1,7 +1,9 @@
+import { ClienteEntity } from 'src/cliente/entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -22,4 +24,7 @@ export class UfEntity {
 
   @UpdateDateColumn()
   updatedAt: string;
+
+  @OneToMany(() => ClienteEntity, (cliente) => cliente.ufs)
+  clientes: ClienteEntity[];
 }
