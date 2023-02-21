@@ -1,10 +1,21 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
 import { Roles } from 'src/decorators/roles.decorator';
 import { Role } from 'src/enums/role.enum';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { RoleGuard } from 'src/guards/role.guard';
-import { CriaUfDto } from 'src/uf/dtos';
+import { AlteraUfPutDTO, CriaUfDto } from 'src/uf/dtos';
 import { UfService } from 'src/uf';
+import { ParamId } from 'src/decorators/param-id.decorator';
 
 @UseGuards(AuthGuard, RoleGuard) //não inverter as ordens porem o ThrottlerGuard tem que vir primeiro para proteger a api
 @Controller('ufs')
@@ -21,5 +32,23 @@ export class UfController {
   @Get()
   async buscaTodos() {
     return this.ufService.buscaTodos();
+  }
+
+  @Get(':id')
+  async buscaPorId(@ParamId() id: number) {
+    return this.ufService.buscaPorId(id);
+  }
+
+  @Put(':id')
+  async alteraUmRegistro(
+    @Body() data: AlteraUfPutDTO,
+    @Param('id', ParseIntPipe) id: number
+  ) {
+    return this.ufService.alteraUmRegistro(id, data);
+  }
+
+  @Delete(':id')
+  async delete(@Param('id', ParseIntPipe) id: number) {
+    return this.ufService.delete(id);
   }
 }
