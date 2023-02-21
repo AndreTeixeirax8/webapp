@@ -6,8 +6,8 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { CidadeErrorApiEnum } from 'src/common/enums/error-api.enum';
 import { Repository } from 'typeorm';
-import { CriaCidadeDto, AlteraCidadePutDTO } from 'src/cidade/dtos';
-import { CidadeEntity } from 'src/cidade/entity';
+import { CriaCidadeDto, AlteraCidadePutDTO } from 'src/modules/cidade/dtos';
+import { CidadeEntity } from 'src/modules/cidade/entity';
 
 @Injectable()
 export class CidadeService {

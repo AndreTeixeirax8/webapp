@@ -1,4 +1,4 @@
-import { ClienteEntity } from 'src/cliente/entity/cliente.entity';
+import { ClienteEntity } from 'src/modules/cliente/entity/cliente.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('cidade')

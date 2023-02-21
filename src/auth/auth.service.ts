@@ -4,11 +4,11 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { UserService } from 'src/user/user.service';
+import { UserService } from 'src/modules/user/user.service';
 import { AuthRegisterDTO } from './dto/auth-register.dto';
 import * as bcrypt from 'bcrypt';
 import { MailerService } from '@nestjs-modules/mailer/dist';
-import { UserEntity } from 'src/user/entity/user.entity';
+import { UserEntity } from 'src/modules/user/entity/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 

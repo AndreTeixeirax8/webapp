@@ -6,8 +6,8 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { UfErrorApiEnum } from 'src/common/enums/error-api.enum';
 import { Repository } from 'typeorm';
-import { AlteraUfPutDTO, CriaUfDto } from 'src/uf/dtos';
-import { UfEntity } from 'src/uf/entity';
+import { AlteraUfPutDTO, CriaUfDto } from 'src/modules/uf/dtos';
+import { UfEntity } from 'src/modules/uf/entity';
 
 @Injectable()
 export class UfService {

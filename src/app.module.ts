@@ -5,16 +5,16 @@ import { ThrottlerModule } from '@nestjs/throttler';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
-import { UserModule } from './user/user.module';
+import { UserModule } from 'src/modules/user/user.module';
 import { PugAdapter } from '@nestjs-modules/mailer/dist/adapters/pug.adapter';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserEntity } from './user/entity/user.entity';
-import { ClienteEntity } from './cliente/entity/cliente.entity';
-import { ClienteModule } from './cliente/cliente.module';
-import { CidadeModule } from './cidade/cidade.module';
-import { CidadeEntity } from './cidade/entity/cidade.entity';
-import { UfModule } from 'src/uf/uf.module';
-import { UfEntity } from './uf/entity';
+import { UserEntity } from 'src/modules/user/entity/user.entity';
+import { ClienteEntity } from 'src/modules/cliente/entity';
+import { ClienteModule } from 'src/modules/cliente';
+import { CidadeModule } from 'src/modules/cidade/cidade.module';
+import { CidadeEntity } from 'src/modules/cidade/entity';
+import { UfModule } from 'src/modules/uf/uf.module';
+import { UfEntity } from 'src/modules/uf/entity';
 
 @Module({
   imports: [

@@ -1,3 +1,3 @@
-import { CriaCidadeDto } from 'src/cidade/dtos';
+import { CriaCidadeDto } from 'src/modules/cidade/dtos';
 
 export class AlteraCidadePutDTO extends CriaCidadeDto {}

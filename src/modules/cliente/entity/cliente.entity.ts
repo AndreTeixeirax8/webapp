@@ -1,5 +1,5 @@
-import { CidadeEntity } from 'src/cidade/entity/cidade.entity';
-import { UfEntity } from 'src/uf/entity';
+import { CidadeEntity } from 'src/modules/cidade/entity/cidade.entity';
+import { UfEntity } from 'src/modules/uf/entity';
 import {
   Column,
   CreateDateColumn,

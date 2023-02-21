@@ -1,4 +1,4 @@
-import { ClienteEntity } from 'src/cliente/entity';
+import { ClienteEntity } from 'src/modules/cliente/entity';
 import {
   Column,
   CreateDateColumn,
