@@ -13,7 +13,7 @@ import { ClienteEntity } from './cliente/entity/cliente.entity';
 import { ClienteModule } from './cliente/cliente.module';
 import { CidadeModule } from './cidade/cidade.module';
 import { CidadeEntity } from './cidade/entity/cidade.entity';
-import { UfModule } from './uf';
+import { UfModule } from 'src/uf/uf.module';
 import { UfEntity } from './uf/entity';
 
 @Module({

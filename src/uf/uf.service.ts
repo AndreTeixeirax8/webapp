@@ -1,9 +1,13 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UfErrorApiEnum } from 'src/common/enums/error-api.enum';
 import { Repository } from 'typeorm';
-import { CriaUfDto } from './dtos';
-import { UfEntity } from './entity';
+import { CriaUfDto } from 'src/uf/dtos';
+import { UfEntity } from 'src/uf/entity';
 
 @Injectable()
 export class UfService {
@@ -25,5 +29,21 @@ export class UfService {
 
     const uf = this.ufRepository.create(data);
     return this.ufRepository.save(uf);
+  }
+
+  async buscaTodos() {
+    return this.ufRepository.find();
+  }
+
+  async verificaSeExiteId(id: number) {
+    if (
+      !(await this.ufRepository.exist({
+        where: {
+          id,
+        },
+      }))
+    ) {
+      throw new NotFoundException(UfErrorApiEnum.NaoEncotrado);
+    }
   }
 }

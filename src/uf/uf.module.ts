@@ -12,12 +12,8 @@ import { UfService } from './uf.service';
     forwardRef(() => UserModule),
     TypeOrmModule.forFeature([UfEntity]),
   ],
-  controllers: [
-    UfController,
-  ] /**Controllers disponibilizados por esse modulo */,
-  providers: [
-    UfService,
-  ] /**Quais são os serviços que poderão ser injetados ou providos pelo modulo */,
+  controllers: [UfController],
+  providers: [UfService],
   exports: [
     UfService,
   ] /**Quais os recursos que eu tenho no module que eu quero exportar para outros modulos  */,
