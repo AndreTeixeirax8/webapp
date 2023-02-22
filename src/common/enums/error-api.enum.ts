@@ -13,3 +13,9 @@ export enum UfErrorApiEnum {
   NaoEncotrado = 'Unidade federal não encontrada',
   UfJaCadastrada = 'Já possui uma unidade federal com esse nome',
 }
+
+export enum UserErrorApiEnum {
+  NaoEncotrado = 'Usuário não encontrado',
+  CpfJaCadastrado = 'CPF inserido já está em uso',
+  EmailJaCadastrado = 'E-Mail inserido já está em uso',
+}

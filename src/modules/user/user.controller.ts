@@ -30,8 +30,8 @@ export class UserController {
 
   @Roles(Role.Admin) //aqui permite o acesso a penas a um admin
   @Post()
-  async criaUmCliente(@Body() body: CreateUserDTO) {
-    return this.userService.criaUmCliente(body);
+  async criaUmUser(@Body() body: CreateUserDTO) {
+    return this.userService.criaUmUser(body);
   }
 
   @Roles(Role.Admin) //aqui permite o acesso a penas a um admin

@@ -144,7 +144,7 @@ export class AuthService {
   async register(data: AuthRegisterDTO) {
     delete data.role;
 
-    const user = await this.userService.criaUmCliente(data);
+    const user = await this.userService.criaUmUser(data);
 
     return this.createToken(user);
   }

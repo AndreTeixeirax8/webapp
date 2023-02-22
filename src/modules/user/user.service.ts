@@ -10,6 +10,7 @@ import * as bcrypt from 'bcrypt';
 import { Repository } from 'typeorm';
 import { UserEntity } from './entity/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { UserErrorApiEnum } from 'src/common/enums/error-api.enum';
 
 @Injectable()
 export class UserService {
@@ -18,7 +19,7 @@ export class UserService {
     private readonly userRepository: Repository<UserEntity>
   ) {}
 
-  async criaUmCliente(data: CreateUserDTO) {
+  async criaUmUser(data: CreateUserDTO) {
     if (
       await this.userRepository.exist({
         where: {
@@ -27,6 +28,16 @@ export class UserService {
       })
     ) {
       throw new BadRequestException('Este e-mail já está sendo usado.');
+    }
+
+    if (
+      await this.userRepository.exist({
+        where: {
+          cpf: data.cpf,
+        },
+      })
+    ) {
+      throw new BadRequestException(UserErrorApiEnum.CpfJaCadastrado);
     }
 
     const salt = await bcrypt.genSalt();
@@ -124,4 +135,6 @@ export class UserService {
       throw new NotFoundException(`O usuário ${id} não existe.`);
     }
   }
+
+  async verificaSeExisteCpf(cpf: string) {}
 }
