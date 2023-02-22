@@ -32,11 +32,11 @@ export class ClienteController {
   async create(@Body() body: CriarClienteDTO) {
     return this.clienteService.criar(body);
   }
-
+  /*
   @Get('listagem/paginada')
   async buscaVariosPaginado(@Paginate() query: PaginateQuery) {
     return this.clienteService.buscaVariosPaginado(query);
-  }
+  }*/
 
   @Roles(Role.Admin)
   @Get()

@@ -103,7 +103,7 @@ export class ClienteService {
     return true;
   }
 
-  async buscaVariosPaginado(
+  /* async buscaVariosPaginado(
     query: PaginateQuery
   ): Promise<Paginated<ClienteEntity>> {
     return paginate(query, this.clienteRepository, {
@@ -127,5 +127,5 @@ export class ClienteService {
         id: [FilterOperator.EQ, FilterOperator.IN],
       },
     });
-  }
+  }*/
 }

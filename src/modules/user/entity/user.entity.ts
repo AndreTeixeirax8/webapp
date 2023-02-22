@@ -1,7 +1,10 @@
+import { CidadeEntity } from 'src/modules/cidade/entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -46,4 +49,8 @@ export class UserEntity {
 
   @Column()
   cpf: string;
+
+  @ManyToOne(() => CidadeEntity, (cidade) => cidade.usuarios)
+  @JoinColumn({ name: 'cidade', referencedColumnName: 'id' })
+  cidades: CidadeEntity;
 }
