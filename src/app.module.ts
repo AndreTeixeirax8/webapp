@@ -9,8 +9,6 @@ import { UserModule } from 'src/modules/user/user.module';
 import { PugAdapter } from '@nestjs-modules/mailer/dist/adapters/pug.adapter';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from 'src/modules/user/entity/user.entity';
-import { ClienteEntity } from 'src/modules/cliente/entity';
-import { ClienteModule } from 'src/modules/cliente';
 import { CidadeModule } from 'src/modules/cidade/cidade.module';
 import { CidadeEntity } from 'src/modules/cidade/entity';
 import { UfModule } from 'src/modules/uf/uf.module';
@@ -26,7 +24,6 @@ import { UfEntity } from 'src/modules/uf/entity';
     }),
     forwardRef(() => UserModule),
     forwardRef(() => AuthModule),
-    forwardRef(() => ClienteModule),
     CidadeModule,
     UfModule,
     MailerModule.forRoot({
@@ -56,7 +53,7 @@ import { UfEntity } from 'src/modules/uf/entity';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [UserEntity, ClienteEntity, CidadeEntity, UfEntity],
+      entities: [UserEntity, CidadeEntity, UfEntity],
       synchronize: true, //deixa true só no ambiente de desenvolvimento
     }),
   ] /** Aqui vai os modulos que ele vai importar, receber outros modulos */,

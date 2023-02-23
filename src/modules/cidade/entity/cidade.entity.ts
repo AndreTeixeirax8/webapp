@@ -1,4 +1,3 @@
-import { ClienteEntity } from 'src/modules/cliente/entity/cliente.entity';
 import { UserEntity } from 'src/modules/user/entity/user.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
@@ -15,10 +14,6 @@ export class CidadeEntity {
 
   @Column()
   codigo: number;
-
-  /*
-  @OneToMany(() => ClienteEntity, (cliente) => cliente.cidade)
-  clientes: ClienteEntity[];*/
 
   @OneToMany(() => UserEntity, (usuario) => usuario.cidade)
   usuarios: UserEntity[];

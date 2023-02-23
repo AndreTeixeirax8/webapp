@@ -1,4 +1,3 @@
-import { ClienteEntity } from 'src/modules/cliente/entity';
 import { UserEntity } from 'src/modules/user/entity/user.entity';
 import {
   Column,
@@ -25,10 +24,6 @@ export class UfEntity {
 
   @UpdateDateColumn()
   updatedAt: string;
-
-  /*
-  @OneToMany(() => ClienteEntity, (cliente) => cliente.ufs)
-  clientes: ClienteEntity[];*/
 
   @OneToMany(() => UserEntity, (usuario) => usuario.ufs)
   usuarios: UserEntity[];
