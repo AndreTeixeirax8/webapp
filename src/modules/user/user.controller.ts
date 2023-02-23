@@ -20,6 +20,7 @@ import { UserService } from './user.service';
 import { RoleGuard } from 'src/guards/role.guard';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { ThrottlerGuard } from '@nestjs/throttler/dist/throttler.guard';
+import { Paginate, PaginateQuery } from 'nestjs-paginate';
 //@UserGuards(ThrottlerGuard({})) usar para proteger a aplicação cotnra DDOS
 @UseGuards(AuthGuard, RoleGuard) //não inverter as ordens porem o ThrottlerGuard tem que vir primeiro para proteger a api
 @Controller('users')
@@ -38,6 +39,12 @@ export class UserController {
   @Get()
   async buscaTodos() {
     return this.userService.BuscaTodos();
+  }
+
+  @Roles(Role.Admin)
+  @Get('listagem/paginada')
+  async buscaVariosPaginado(@Paginate() query: PaginateQuery) {
+    return this.userService.buscaVariosPaginado(query);
   }
 
   @Get(':id')

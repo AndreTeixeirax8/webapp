@@ -11,6 +11,12 @@ import { Repository } from 'typeorm';
 import { UserEntity } from './entity/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserErrorApiEnum } from 'src/common/enums/error-api.enum';
+import {
+  FilterOperator,
+  paginate,
+  Paginated,
+  PaginateQuery,
+} from 'nestjs-paginate';
 
 @Injectable()
 export class UserService {
@@ -137,4 +143,29 @@ export class UserService {
   }
 
   async verificaSeExisteCpf(cpf: string) {}
+
+  async buscaVariosPaginado(
+    query: PaginateQuery
+  ): Promise<Paginated<UserEntity>> {
+    return paginate(query, this.userRepository, {
+      select: [
+        'id',
+        'name',
+        'email',
+        'cpf',
+        'telefone',
+        'unidadeFederal',
+        'cidade',
+        'cidades.nome',
+      ],
+      relations: ['cidades'],
+      sortableColumns: ['id', 'name'],
+      searchableColumns: ['id'],
+      defaultSortBy: [['id', 'ASC']],
+      defaultLimit: 10,
+      filterableColumns: {
+        id: [FilterOperator.EQ, FilterOperator.IN],
+      },
+    });
+  }
 }
