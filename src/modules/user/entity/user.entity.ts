@@ -1,4 +1,5 @@
 import { CidadeEntity } from 'src/modules/cidade/entity';
+import { UfEntity } from 'src/modules/uf/entity';
 import {
   Column,
   CreateDateColumn,
@@ -53,4 +54,8 @@ export class UserEntity {
   @ManyToOne(() => CidadeEntity, (cidade) => cidade.usuarios)
   @JoinColumn({ name: 'cidade', referencedColumnName: 'id' })
   cidades: CidadeEntity;
+
+  @ManyToOne(() => UfEntity, (ufs) => ufs.usuarios)
+  @JoinColumn({ name: 'unidadeFederal', referencedColumnName: 'id' })
+  ufs: UfEntity;
 }

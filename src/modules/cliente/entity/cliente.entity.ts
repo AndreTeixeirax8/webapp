@@ -51,8 +51,8 @@ export class ClienteEntity {
   @ManyToOne(() => CidadeEntity, (cidade) => cidade.clientes)
   @JoinColumn({ name: 'cidade', referencedColumnName: 'id' })
   cidades: CidadeEntity;*/
-
+  /*
   @ManyToOne(() => UfEntity, (ufs) => ufs.clientes)
   @JoinColumn({ name: 'unidadeFederal', referencedColumnName: 'id' })
-  ufs: CidadeEntity;
+  ufs: CidadeEntity;*/
 }
