@@ -12,7 +12,7 @@ export class ProdutoEntity {
   id: number;
 
   @Column()
-  name: string;
+  nome: string;
 
   @Column('decimal', { precision: 10, scale: 2 })
   custo_atual: number;

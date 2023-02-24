@@ -1,8 +1,8 @@
 import { IsDateString, IsNumber, IsOptional, IsString } from 'class-validator';
 
-export class ProdutoDto {
+export class CriaProdutoDto {
   @IsString()
-  name: string;
+  nome: string;
 
   @IsNumber()
   custo_atual: number;
