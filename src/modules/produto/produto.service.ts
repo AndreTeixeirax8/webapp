@@ -26,4 +26,8 @@ export class ProdutoService {
     const uf = this.produtoRepository.create(data);
     return this.produtoRepository.save(uf);
   }
+
+  async buscaTodos() {
+    return this.produtoRepository.find();
+  }
 }

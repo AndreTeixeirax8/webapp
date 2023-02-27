@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { Roles } from 'src/decorators/roles.decorator';
 import { Role } from 'src/enums/role.enum';
 import { AuthGuard } from 'src/guards/auth.guard';
@@ -15,5 +15,11 @@ export class ProdutoController {
   @Post()
   async criar(@Body() body: CriaProdutoDto) {
     return this.produtoService.criar(body);
+  }
+
+  @Roles(Role.Admin)
+  @Get()
+  async buscaTodos() {
+    return this.produtoService.buscaTodos();
   }
 }
