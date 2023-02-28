@@ -1,4 +1,5 @@
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { ParamId } from 'src/decorators/param-id.decorator';
 import { Roles } from 'src/decorators/roles.decorator';
 import { Role } from 'src/enums/role.enum';
 import { AuthGuard } from 'src/guards/auth.guard';
@@ -21,5 +22,10 @@ export class ProdutoController {
   @Get()
   async buscaTodos() {
     return this.produtoService.buscaTodos();
+  }
+
+  @Get(':id')
+  async buscaPorId(@ParamId() id: number) {
+    return this.produtoService.buscaPorId(id);
   }
 }

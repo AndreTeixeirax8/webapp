@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProdutoErrorApiEnum } from 'src/common/enums/error-api.enum';
 import { Repository } from 'typeorm';
@@ -29,5 +33,25 @@ export class ProdutoService {
 
   async buscaTodos() {
     return this.produtoRepository.find();
+  }
+
+  async verificaSeExiteId(id: number) {
+    if (
+      !(await this.produtoRepository.exist({
+        where: {
+          id,
+        },
+      }))
+    ) {
+      throw new NotFoundException(ProdutoErrorApiEnum.NaoEncotrado);
+    }
+  }
+
+  async buscaPorId(id: number) {
+    await this.verificaSeExiteId(id);
+
+    return this.produtoRepository.findOneBy({
+      id,
+    });
   }
 }
