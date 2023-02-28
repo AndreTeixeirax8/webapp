@@ -34,7 +34,7 @@ export class AuthService {
           email: user.email,
         },
         {
-          expiresIn: '2 days',
+          expiresIn: '4 days', //Tempo de expiração do token
           subject: String(user.id),
           issuer: this.issuer,
           audience: this.audience,
