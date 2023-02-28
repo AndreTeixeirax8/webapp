@@ -7,6 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ProdutoErrorApiEnum } from 'src/common/enums/error-api.enum';
 import { Like, Repository } from 'typeorm';
 import { CriaProdutoDto } from './dtos';
+import { AlteraProdutoPutDTO } from './dtos/altera-produto-total-put.dto';
 import { ProdutoEntity } from './entity';
 
 @Injectable()
@@ -63,5 +64,20 @@ export class ProdutoService {
     if (busca.length == 0)
       throw new NotFoundException(ProdutoErrorApiEnum.NaoEncotrado);
     return busca;
+  }
+
+  async alteraUmRegistro(id: number, alteraProdutoPutDTO: AlteraProdutoPutDTO) {
+    await this.verificaSeExiteId(id);
+    await this.produtoRepository.update(id, alteraProdutoPutDTO);
+
+    return this.buscaPorId(id);
+  }
+
+  async delete(id: number) {
+    await this.verificaSeExiteId(id);
+
+    await this.produtoRepository.delete(id);
+
+    return true;
   }
 }
