@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProdutoErrorApiEnum } from 'src/common/enums/error-api.enum';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { CriaProdutoDto } from './dtos';
 import { ProdutoEntity } from './entity';
 
@@ -53,5 +53,15 @@ export class ProdutoService {
     return this.produtoRepository.findOneBy({
       id,
     });
+  }
+
+  async show(nome: string) {
+    const busca = await this.produtoRepository.find({
+      where: [{ nome: Like(`%${nome}%`) }],
+    });
+
+    if (busca.length == 0)
+      throw new NotFoundException(ProdutoErrorApiEnum.NaoEncotrado);
+    return busca;
   }
 }

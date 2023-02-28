@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { ParamId } from 'src/decorators/param-id.decorator';
 import { Roles } from 'src/decorators/roles.decorator';
 import { Role } from 'src/enums/role.enum';
@@ -22,6 +22,11 @@ export class ProdutoController {
   @Get()
   async buscaTodos() {
     return this.produtoService.buscaTodos();
+  }
+
+  @Get(':nome')
+  async show(@Param('nome') nome: string) {
+    return this.produtoService.show(nome);
   }
 
   @Get(':id')
