@@ -21,6 +21,7 @@ import { RoleGuard } from 'src/guards/role.guard';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { ThrottlerGuard } from '@nestjs/throttler/dist/throttler.guard';
 import { Paginate, PaginateQuery } from 'nestjs-paginate';
+import axios from 'axios';
 //@UserGuards(ThrottlerGuard({})) usar para proteger a aplicação cotnra DDOS
 @UseGuards(AuthGuard, RoleGuard) //não inverter as ordens porem o ThrottlerGuard tem que vir primeiro para proteger a api
 @Controller('users')
@@ -80,5 +81,11 @@ export class UserController {
   @Delete(':id')
   async delete(@Param('id', ParseIntPipe) id: number) {
     return this.userService.delete(id);
+  }
+
+  @Post('/buscacep/:cep')
+  async buscarCEP(@Param('cep') cep: string) {
+    const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
+    return response.data;
   }
 }
